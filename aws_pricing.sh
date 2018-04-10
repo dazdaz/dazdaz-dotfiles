@@ -34,3 +34,28 @@ for i in `wget -q -O- $AWS_JSON_PRICE_OFFERS_URL |  jq -r '.offers[] ' | grep cu
    echo $FILENAME_JSON
    wget https://pricing.us-east-1.amazonaws.com$i -O $FILENAME_JSON
 done
+
+
+#"AWS GovCloud (US)",
+#"Asia Pacific (Mumbai)",
+#"Asia Pacific (Osaka-Local)",
+#"Asia Pacific (Seoul)",
+#"Asia Pacific (Singapore)",
+#"Asia Pacific (Sydney)",
+#"Asia Pacific (Tokyo)",
+#"Canada (Central)",
+#"EU (Frankfurt)",
+#"EU (Ireland)",
+#"EU (London)",
+#"EU (Paris)",
+#"South America (Sao Paulo)",
+#"US East (N. Virginia)",
+#"US East (Ohio)",
+#"US West (N. California)",
+#"US West (Oregon)",
+
+# View EC2 instance type, with a Linux VM in Singapore
+cat aws_pricing_10-04-2018/AmazonEC2_index.json | jq '[.products| to_entries | .[].value | select (.attributes.operatingSystem == "Linux" and .attributes.location=="Asia Pacific (Singapore)")  | {key: .sku, value: .}]|from_entries'
+
+# View the pricing in USD per hour for EC2 instance type
+cat aws_pricing_10-04-2018/AmazonEC2_index.json | jq '.terms.OnDemand | .. | .priceDimensions? | select (. != null) |map_values (.)| map (. + {sku: .rateCode|split(".")[0]}) | .[]'
