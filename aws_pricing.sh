@@ -59,3 +59,6 @@ cat aws_pricing_10-04-2018/AmazonEC2_index.json | jq '[.products| to_entries | .
 
 # View the pricing in USD per hour for EC2 instance type
 cat aws_pricing_10-04-2018/AmazonEC2_index.json | jq '.terms.OnDemand | .. | .priceDimensions? | select (. != null) |map_values (.)| map (. + {sku: .rateCode|split(".")[0]}) | .[]'
+
+# Show EC2 Instance Types in Singapore with a shared tenancy type
+curl -s  https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/current/index.json | jq -r '.products[].attributes | select(.location == "Asia Pacific (Singapore)" and .tenancy == "Shared") | .instanceType' | sort -u
