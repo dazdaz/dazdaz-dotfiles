@@ -54,11 +54,11 @@ done
 #"US West (N. California)",
 #"US West (Oregon)",
 
-# View EC2 instance type, with a Linux VM in Singapore
-cat aws_pricing_10-04-2018/AmazonEC2_index.json | jq '[.products| to_entries | .[].value | select (.attributes.operatingSystem == "Linux" and .attributes.location=="Asia Pacific (Singapore)")  | {key: .sku, value: .}]|from_entries'
+# View EC2 instance type, with a Linux VM in Singapore on a shared tenancy
+cat aws_pricing_10-04-2018/AmazonEC2_index.json | jq '[.products| to_entries | .[].value | select (.attributes.operatingSystem == "Linux" and .attributes.location=="Asia Pacific (Singapore)" and .attributes.tenancy == "Shared")  | {key: .sku, value: .}]|from_entries'
 
 # View the pricing in USD per hour for EC2 instance type
 cat aws_pricing_10-04-2018/AmazonEC2_index.json | jq '.terms.OnDemand | .. | .priceDimensions? | select (. != null) |map_values (.)| map (. + {sku: .rateCode|split(".")[0]}) | .[]'
 
 # Show EC2 Instance Types in Singapore with a shared tenancy type
-curl -s  https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/current/index.json | jq -r '.products[].attributes | select(.location == "Asia Pacific (Singapore)" and .tenancy == "Shared") | .instanceType' | sort -u
+curl -s  https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/current/index.json | jq -r '.products[].attributes | select(.location == "Asia Pacific (Singapore)" and .tenancy == "Shared" ) | .instanceType' | sort -u
