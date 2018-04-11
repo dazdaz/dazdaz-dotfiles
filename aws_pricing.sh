@@ -10,7 +10,7 @@ OUTPUTDIR_PRICEOFFERS=aws_pricing_offer_`date +%d-%m-%Y`
 mkdir -p ~/scripts/$OUTPUTDIR_PRICE
 cd ~/scripts/$OUTPUTDIR_PRICE
 
-# Obtain URI's for Prices, stored in CSV and then download them into current directory
+# Obtain URI's for Prices and then download them into current directory
 for i in `wget -q -O- $AWS_JSON_PRICE_URL |  jq -r '.offers[] ' | grep current | cut -d'"' -f4`
  do
    FILENAME_JSON=`echo $i | awk -F/ '{sub(/%$/,"",$5); print $5 "_" $7}'`
@@ -27,7 +27,7 @@ mkdir -p ~/scripts/$OUTPUTDIR_PRICEOFFERS
 cd ~/scripts/$OUTPUTDIR_PRICEOFFERS
 
 # Offers = Discounts ?
-# Obtain URI's for Prices, stored in CSV and then download them into current directory
+# Obtain URI's for Prices then download them into current directory
 for i in `wget -q -O- $AWS_JSON_PRICE_OFFERS_URL |  jq -r '.offers[] ' | grep current | cut -d'"' -f4`
    do
    FILENAME_JSON=`echo $i | awk -F/ '{sub(/%$/,"",$5); print $5 "_" $7}'`
