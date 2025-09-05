@@ -1,3 +1,11 @@
+# Set environment variables for Android and Java SDKs
+export ANDROID_SDK_ROOT="${HOME}/Library/Android/sdk"
+export ANDROID_HOME="${ANDROID_SDK_ROOT}"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home"
+
+# Prepend all necessary directories to the PATH in a single, clean command
+export PATH="${HOME}/development/flutter/bin:${JAVA_HOME}/bin:${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/build-tools/36.0.0:/opt/homebrew/bin:${HOME}/bin:${PATH}"
+
 if [ -f '~/google-cloud-sdk/path.bash.inc' ]; then . '~/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
