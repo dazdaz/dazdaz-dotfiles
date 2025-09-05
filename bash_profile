@@ -4,6 +4,12 @@ if [ -f '~/google-cloud-sdk/path.bash.inc' ]; then . '~/google-cloud-sdk/path.ba
 if [ -f '/Users/daev/google-cloud-sdk/completion.bash.inc' ]; then . '~/google-cloud-sdk/completion.bash.inc'; fi
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+export NVM_DIR="$HOME/.nvm"
+echo [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+echo [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# nvm install node  # install node.js
+# npm install -g @angular/cli  # install the Angular CLI
+
 # Keys
 alias gem="export GEMINI_API_KEY=abcdefghijklmnopqrstuvwxyz ; cd ~/gemini-workingspace ;  gemini"
 alias gemupdate="brew upgrade gemini-cli"
