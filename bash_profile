@@ -1,0 +1,52 @@
+if [ -f '~/google-cloud-sdk/path.bash.inc' ]; then . '~/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/daev/google-cloud-sdk/completion.bash.inc' ]; then . '~/google-cloud-sdk/completion.bash.inc'; fi
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Keys
+alias gem="export GEMINI_API_KEY=abcdefghijklmnopqrstuvwxyz ; cd ~/gemini-workingspace ;  gemini"
+alias gemupdate="brew upgrade gemini-cli"
+#alias gemupdate="npm install -g @google/gemini-cli@latest"
+
+# General config
+alias l="ls -l --color=yes"
+alias ll="ls -la --color=yes"
+alias lon="TZ=Europe/London date"
+alias zur="TZ=Europe/Zurich date"
+alias g="glow -p -w0 $1"
+alias k="kubectl"
+alias kpods="kubectl get pods,jobs"
+alias klogs="kubectl logs $1"
+alias swissclassic="mpv https://www.radioswissclassic.ch/de/live/aacp.m3u"
+alias swisssrg="mpv http://stream.srg-ssr.ch/drs2/mp3_128.m3u"
+alias swissjazz="mpv https://www.radioswissjazz.ch/live/aacp.m3u"
+alias lofi="mpv https://stream.rcast.net/m3u/231436"
+alias inspect="skopeo inspect --override-arch amd64 --override-os linux docker://$1"
+alias morebrew="brew search --casks '*' --desc --eval-all | less -r"
+alias uvinit="uv venv ; source .venv/bin/activate ; uv pip install -r requirements.txt"
+alias uvhere="uv venv ; source .venv/bin/activate"
+alias aicopy='find . -type f \( -name "*.yaml" -o -name "*.sh" -o -name "*.py" -o -name "*.md" \) -print0 2>/dev/null | xargs -0 awk 1 | pbcopy'
+alias zed="/Applications/Zed.app/Contents/MacOS/zed"
+
+qp() {
+  git add "$1" && git commit -m "${2:-updates}" && git push origin main
+}
+
+ghnew() {
+  # Check if a repository name was provided
+  if [ -z "$1" ]; then
+    echo "Error: Please provide a name for your repository like dazdaz/newrepo."
+    return 1
+  fi
+
+  # Initialize a Git repository and make the first commit
+  git init -b main
+  git add .
+  git commit -m "Initial commit"
+
+  # Create the GitHub repository and push the initial commit
+  gh repo create "$1" --public --source=. --push
+
+  echo "‚úÖ Successfully created and pushed repository '$1' to GitHub."
+}
